@@ -86,17 +86,6 @@ ask_custom_option() {
     done
 }
 
-# Function to set user city for weather
-ask_weather_city() {
-    local prompt="$1"
-    local weather_file="config/hypr/scripts/Weather.sh"
-    while true; do
-        read -p "$(colorize_prompt "$CAT" "$1 : ")" choice
-        sed -i "s/city=.*/city=$choice/g" "$weather_file"
-        return 0
-    done
-}
-
 # Function to execute a script if it exists and make it executable
 execute_script() {
     local script="$1"
@@ -116,8 +105,6 @@ execute_script() {
 # Collect user responses to all questions
 printf "\n"
 ask_custom_option "Select AUR helper" "paru or yay" aur_helper
-printf "\n"
-ask_weather_city "Enter the nearest major city for weather updates" city
 printf "\n"
 ask_yes_no "Do you have nvidia gpu?" nvidia
 printf "\n"
@@ -188,7 +175,6 @@ fi
 
 if [ "$dots" == "Y" ]; then
     execute_script "dotfiles.sh" "$(pwd)"
-
 fi
 
 clear
